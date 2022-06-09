@@ -77,6 +77,8 @@ $album = [
   $genreArray = createSelectOptionGenre($album);
   $artistArray = createSelectOptionArtist($album);
 
+  $isLoaded = true;
+
   // var_dump($genreArray);
 
   function createSelectOptionGenre($album){
@@ -110,6 +112,8 @@ $album = [
           
       return $artistArray;
     }
+
+
 
 
 ?>
@@ -172,10 +176,11 @@ $album = [
     </nav>
 
     <main class="main_wrapper">
-
+      
+      <?php if($isLoaded): ?>
         <div v-if="isLoaded" class="album_container container">
 
-        <?php  foreach ($album as $item => $singlealbum): ?>
+          <?php  foreach ($album as $item => $singlealbum): ?>
           <div class="album_card"> 
           
               <div class="card_container">
@@ -186,9 +191,10 @@ $album = [
               </div>
 
           </div>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
       
         </div>
+        <?php else: ?>
 
         <div class="container" v-else>
           <div class="loader_container">
@@ -198,11 +204,11 @@ $album = [
             <div class="title">LOADING YOUR FAVORITE MUSIC ...</div> 
           </div>
         </div>
+        <?php endif; ?>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-  <script src="./script.js"></script>
 
 </body>
 </html>
