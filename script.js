@@ -2,32 +2,36 @@ const app = new Vue({
   el: '#app',
 
   data:{
-    baseURL:'http://localhost/php-json/album-json.php',
+    baseURL:'http://localhost:8888/php-ajax-dischi/api.php',
     albumArray:[],
-    isLoaded : true,
+    isLoaded : false,
 
     genreArray:[],
     artistArray:[],
+    filterKeyGenre:'',
+    filterKeyArtist:'',
+
 
     error_msg: '',
     success : true,
   },
   mounted() {
-    // this.getApi();
-    setTimeout(() => {this.isLoaded = true}, 1000);
+    this.getApi();
+    setTimeout(() => {this.isLoaded = true}, 2000);
   },
 
   methods: {
-    // getApi(){
-    //   axios.get(this.baseURL)
-    //   .then(response =>{
-    //     this.album = response.data.album;
-    //     this.success = response.data.success;
-    //     this.error_msg = response.data.error_msg;
-    //     console.log(response.data.album);
-    //     setTimeout(() => {this.isLoaded = true}, 1000);
-    //   })
-    // },
+    getApi(){
+      axios.get(this.baseURL)
+      .then(response =>{
+        this.albumArray = response.data.album;
+        this.success = response.data.success;
+        this.error_msg = response.data.error_msg;
+        console.log(response.data.album);
+        setTimeout(() => {this.isLoaded = true}, 1000);
+        this.createSelectOption();
+      })
+    },
 
     // Funzione che salva il valore del parametro ricevuto dal componente figlio in una variabile del componente stesso
     filterAlbumGenre(value) {
@@ -43,51 +47,37 @@ const app = new Vue({
 
   // HEADER
 
-  // Funzione che al verificarsi dell'evento passa il valore della select al componente genitore
-  onChangedGenre(value) {
-    console.log('onChangedGenre',value)
-    this.selectGenreValue = value; // someValue
-    this.$emit('filterItemsGenre', this.selectGenreValue)
-  },
-
-  // Funzione che al verificarsi dell'evento passa il valore della select al componente genitore
-  onChangedArtist(value) {
-    console.log('onChangedArtist',value)
-    this.selectArtistValue = value; // someValue
-    this.$emit('filterItemsArtist', this.selectArtistValue)
-  },
-
   // SELECT
 
-  // createSelectOption(){
-  //   console.log('START createSelectOption');
+  createSelectOption(){
+    console.log('START createSelectOption');
 
-  //   // Ciclo l'array della risposta API ed push gli elementi non presenti nell'array del genere musicale
-  //   this.responseArray.forEach(element => {
-  //     if(!this.genreArray.includes(element.genre)){
-  //       console.log(element.genre);
-  //       this.genreArray.push(element.genre);
-  //     }
-  //   });
+    // Ciclo l'array della risposta API ed push gli elementi non presenti nell'array del genere musicale
+    this.albumArray.forEach(element => {
+      if(!this.genreArray.includes(element.genre)){
+        console.log(element.genre);
+        this.genreArray.push(element.genre);
+      }
+    });
 
-  //   // Ciclo l'array della risposta API ed push gli elementi non presenti nell'array degli artisti
-  //   this.responseArray.forEach(element => {
-  //     if(!this.artistArray.includes(element.author)){
-  //       console.log(element.author);
-  //       this.artistArray.push(element.author);
-  //     }
-  //   });
-  // },
-
-  onChangeSelectGenre () {
-    // Funzione che al cambio di valore della select dei generi invia l'evento ed il valore della select stessa al componente genitore
-      this.$emit('selectedItemGenre', event.target.value)
-      console.log("CHILDREN Genre ---> CHANGED", event.target.value);
+    // Ciclo l'array della risposta API ed push gli elementi non presenti nell'array degli artisti
+    this.albumArray.forEach(element => {
+      if(!this.artistArray.includes(element.author)){
+        console.log(element.author);
+        this.artistArray.push(element.author);
+      }
+    });
   },
 
-  onChangeSelectArtist (){
+  onChangeSelectGenre (value) {
+    // Funzione che al cambio di valore della select dei generi invia l'evento ed il valore della select stessa al componente genitore
+    this.filterKeyGenre = event.target.value;
+    console.log("CHILDREN Genre ---> CHANGED", event.target.value);
+  },
+
+  onChangeSelectArtist (value){
     // Funzione che al cambio di valore della select degli artisti invia l'evento ed il valore della select stessa al componente genitore
-    this.$emit('selectedItemArtist', event.target.value)
+    this.filterKeyArtist = event.target.value;
     console.log("CHILDREN Artist ---> CHANGED", event.target.value);
   }
 
