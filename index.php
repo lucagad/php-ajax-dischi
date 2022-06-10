@@ -74,31 +74,6 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse navbar_select_container" id="navbarNav">
-          
-        <div>
-          <!-- Al cambio del valore della select chiamo la relativa funzione che passa parametri al componente genitore -->
-          <select 
-          @change="onChangeSelectGenre"
-          name="music-genre" id="genre">
-            <option value="all" selected>Seleziona un genere</option>
-            <?php  foreach ($genreArray as $item => $genre): ?>
-            <option value="element"><?php echo $genre; ?></option>
-            <?php endforeach; ?>
-
-          </select>
-
-          <!-- Al cambio del valore della select chiamo la relativa funzione che passa parametri al componente genitore -->
-          <select 
-            @change="onChangeSelectArtist"
-            name="music-artist" id="artist">
-              <option value="all" selected>Seleziona un'artista</option>
-              <?php  foreach ($artistArray as $item => $artist): ?>
-                <option value="element"><?php echo $artist; ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-        </div>
       </div>
     </nav>
 
