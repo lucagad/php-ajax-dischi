@@ -45,23 +45,6 @@ const app = new Vue({
       console.log("VUE.APP -----> Select Artist Value:", value);
   },
 
-  // HEADER
-
-  // SELECT
-
-  onChangeSelectGenre (value) {
-    // Funzione che al cambio di valore della select dei generi invia l'evento ed il valore della select stessa al componente genitore
-    this.filterKeyGenre = event.target.value;
-    console.log("CHILDREN Genre ---> CHANGED", event.target.value);
-  },
-
-  onChangeSelectArtist (value){
-    // Funzione che al cambio di valore della select degli artisti invia l'evento ed il valore della select stessa al componente genitore
-    this.filterKeyArtist = event.target.value;
-    console.log("CHILDREN Artist ---> CHANGED", event.target.value);
-  }
-
-
   },
   computed:{
     filteredAlbum(){
