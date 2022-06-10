@@ -11,13 +11,11 @@ const app = new Vue({
     filterKeyGenre:'',
     filterKeyArtist:'',
 
-
     error_msg: '',
     success : true,
   },
   mounted() {
     this.getApi();
-    setTimeout(() => {this.isLoaded = true}, 2000);
   },
 
   methods: {
@@ -27,9 +25,11 @@ const app = new Vue({
         this.albumArray = response.data.album;
         this.success = response.data.success;
         this.error_msg = response.data.error_msg;
+        this.genreArray = response.data.genre;
+        this.artistArray = response.data.artist;
+
         console.log(response.data.album);
-        setTimeout(() => {this.isLoaded = true}, 1000);
-        this.createSelectOption();
+        setTimeout(() => {this.isLoaded = true}, 2000);
       })
     },
 
@@ -48,26 +48,6 @@ const app = new Vue({
   // HEADER
 
   // SELECT
-
-  createSelectOption(){
-    console.log('START createSelectOption');
-
-    // Ciclo l'array della risposta API ed push gli elementi non presenti nell'array del genere musicale
-    this.albumArray.forEach(element => {
-      if(!this.genreArray.includes(element.genre)){
-        console.log(element.genre);
-        this.genreArray.push(element.genre);
-      }
-    });
-
-    // Ciclo l'array della risposta API ed push gli elementi non presenti nell'array degli artisti
-    this.albumArray.forEach(element => {
-      if(!this.artistArray.includes(element.author)){
-        console.log(element.author);
-        this.artistArray.push(element.author);
-      }
-    });
-  },
 
   onChangeSelectGenre (value) {
     // Funzione che al cambio di valore della select dei generi invia l'evento ed il valore della select stessa al componente genitore

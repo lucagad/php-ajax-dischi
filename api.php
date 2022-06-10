@@ -120,7 +120,11 @@ $album = [
   echo json_encode( [
     'success' =>  $success,
     'error_msg' => $error_msg,
-    'album' => $result
+    'album' => $result,
+    'genre' => $genreArray,
+    'artist' => $artistArray,
+
+
 
   ]);
 
